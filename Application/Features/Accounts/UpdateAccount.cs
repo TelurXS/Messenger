@@ -1,5 +1,4 @@
-﻿using Application.Common.Interfaces;
-using Application.Common.Interfaces.Mappings;
+﻿using Application.Common.Interfaces.Mappings;
 using Application.Common.Interfaces.Services;
 using Application.Common.Models.Results;
 using Application.Common.Models.Results.Unions;
@@ -7,12 +6,14 @@ using Application.Entities;
 using FluentValidation;
 using MediatR;
 
-namespace Application.Features;
+namespace Application.Features.Accounts;
 
-public static class CreateAccount
+public static class UpdateAccount
 {
-    public class Request : IRequest<CreateResult<Account>> 
+    public class Request : IRequest<UpdateResult<Account>>
     {
+        public int Id { get; set; }
+
         public string Name { get; set; } = string.Empty;
 
         public string Email { get; set; } = string.Empty;
@@ -22,10 +23,14 @@ public static class CreateAccount
         public string Password { get; set; } = string.Empty;
     }
 
-    public class Validator : AbstractValidator<Request>
+    public class Validator : AbstractValidator<Request> 
     {
         public Validator(IAccountService service)
         {
+            RuleFor(x => x.Id)
+                .NotEmpty()
+                .Must(x => service.FindById(x).Found);
+
             RuleFor(x => x.Name)
                 .MaximumLength(32)
                 .NotEmpty();
@@ -33,14 +38,14 @@ public static class CreateAccount
             RuleFor(x => x.Login)
                 .NotEmpty()
                 .MaximumLength(32)
-                .Must(x => service.IsLoginExist(x) is false);
+                .Must(service.IsLoginUnique);
 
 
             RuleFor(x => x.Email)
                 .NotEmpty()
                 .MaximumLength(64)
                 .EmailAddress()
-                .Must(x => service.IsEmailExist(x) is false);
+                .Must(service.IsEmailUnique);
 
 
             RuleFor(x => x.Password)
@@ -49,7 +54,7 @@ public static class CreateAccount
         }
     }
 
-    public class Handler : IRequestHandler<Request, CreateResult<Account>>
+    public class Handler : IRequestHandler<Request, UpdateResult<Account>>
     {
         public Handler(IAccountService accountService, IAccountMapper mapper, IValidator<Request> validator)
         {
@@ -58,16 +63,16 @@ public static class CreateAccount
             Validator = validator;
         }
 
-        public IAccountService AccountService { get; }
-        public IAccountMapper Mapper { get; }
-        public IValidator<Request> Validator { get; }
+        private IAccountService AccountService { get; }
+        private IAccountMapper Mapper { get; }
+        private IValidator<Request> Validator { get; }
 
-        public Task<CreateResult<Account>> Handle(Request request, CancellationToken cancellationToken)
+        public Task<UpdateResult<Account>> Handle(Request request, CancellationToken cancellationToken)
         {
             return Task.FromResult(Handle(request));
         }
 
-        public CreateResult<Account> Handle(Request request)
+        private UpdateResult<Account> Handle(Request request)
         {
             var validationResult = Validator.Validate(request);
 
@@ -76,7 +81,7 @@ public static class CreateAccount
 
             var account = Mapper.FromRequest(request);
 
-            var result = AccountService.Create(account);
+            var result = AccountService.Update(request.Id, account);
 
             return result;
         }

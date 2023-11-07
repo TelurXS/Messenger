@@ -1,6 +1,7 @@
 using Application.Common.Extensions;
 using Application.Common.Interfaces.Services;
 using Application.Features;
+using Application.Features.Accounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

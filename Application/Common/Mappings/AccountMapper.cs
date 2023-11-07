@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces.Mappings;
 using Application.Entities;
 using Application.Features;
+using Application.Features.Accounts;
 using Riok.Mapperly.Abstractions;
 
 namespace Application.Common.Mappings;

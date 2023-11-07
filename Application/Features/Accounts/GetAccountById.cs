@@ -1,11 +1,9 @@
 ﻿using Application.Common.Interfaces.Services;
-using Application.Common.Interfaces;
 using Application.Common.Models.Results.Unions;
 using Application.Entities;
 using MediatR;
-using Application.Common.Models.Results;
 
-namespace Application.Features;
+namespace Application.Features.Accounts;
 
 public static partial class GetAccountById
 {
@@ -21,7 +19,7 @@ public static partial class GetAccountById
             AccountService = accountService;
         }
 
-        public IAccountService AccountService { get; }
+        private IAccountService AccountService { get; }
 
         public Task<GetResult<Account>> Handle(Request request, CancellationToken cancellationToken)
         {

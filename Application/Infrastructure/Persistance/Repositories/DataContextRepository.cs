@@ -5,7 +5,7 @@ namespace Application.Infrastructure.Persistance.Repositories;
 
 public abstract class DataContextRepository<T> where T: class
 {
-    public DataContextRepository(IDataContext dataContext)
+    protected DataContextRepository(IDataContext dataContext)
     {
         DataContext = dataContext;
         Entities = DataContext.Set<T>();

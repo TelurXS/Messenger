@@ -66,7 +66,7 @@ public class AccountService : RepositoryService<Account, IAccountRepository>, IA
         if (entity is null)
             return new NotFound();
 
-       var result = Repository.Delete(entity);
+        var result = Repository.Delete(entity);
 
         if (result is false)
             return new Failed();
@@ -116,11 +116,21 @@ public class AccountService : RepositoryService<Account, IAccountRepository>, IA
 
     public bool IsEmailExist(string email)
     {
-        return Repository.IsEmailExist(email);
+        return Repository.FindByEmail(email) is not null;
     }
 
     public bool IsLoginExist(string login)
     {
-        return Repository.IsLoginExist(login);
+        return Repository.FindByLogin(login) is not null;
+    }
+
+    public bool IsEmailUnique(string email)
+    {
+        return Repository.FindByEmail(email) is null;
+    }
+
+    public bool IsLoginUnique(string login)
+    {
+        return Repository.FindByLogin(login) is null;
     }
 }

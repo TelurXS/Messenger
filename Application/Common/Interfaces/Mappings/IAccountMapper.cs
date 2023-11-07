@@ -1,5 +1,6 @@
 ﻿using Application.Entities;
 using Application.Features;
+using Application.Features.Accounts;
 
 namespace Application.Common.Interfaces.Mappings;
 

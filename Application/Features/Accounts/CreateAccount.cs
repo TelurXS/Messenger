@@ -6,14 +6,12 @@ using Application.Entities;
 using FluentValidation;
 using MediatR;
 
-namespace Application.Features;
+namespace Application.Features.Accounts;
 
-public static class UpdateAccount
+public static class CreateAccount
 {
-    public class Request : IRequest<UpdateResult<Account>>
+    public class Request : IRequest<CreateResult<Account>> 
     {
-        public int Id { get; set; }
-
         public string Name { get; set; } = string.Empty;
 
         public string Email { get; set; } = string.Empty;
@@ -23,14 +21,10 @@ public static class UpdateAccount
         public string Password { get; set; } = string.Empty;
     }
 
-    public class Validator : AbstractValidator<Request> 
+    public class Validator : AbstractValidator<Request>
     {
         public Validator(IAccountService service)
         {
-            RuleFor(x => x.Id)
-                .NotEmpty()
-                .Must(x => service.FindById(x) is not null);
-
             RuleFor(x => x.Name)
                 .MaximumLength(32)
                 .NotEmpty();
@@ -38,14 +32,14 @@ public static class UpdateAccount
             RuleFor(x => x.Login)
                 .NotEmpty()
                 .MaximumLength(32)
-                .Must(x => service.IsLoginExist(x) is false);
+                .Must((request, x) => service.IsLoginUnique(x));
 
 
             RuleFor(x => x.Email)
                 .NotEmpty()
                 .MaximumLength(64)
                 .EmailAddress()
-                .Must(x => service.IsEmailExist(x) is false);
+                .Must((request, x) => service.IsEmailUnique(x));
 
 
             RuleFor(x => x.Password)
@@ -54,7 +48,7 @@ public static class UpdateAccount
         }
     }
 
-    public class Handler : IRequestHandler<Request, UpdateResult<Account>>
+    public class Handler : IRequestHandler<Request, CreateResult<Account>>
     {
         public Handler(IAccountService accountService, IAccountMapper mapper, IValidator<Request> validator)
         {
@@ -63,16 +57,16 @@ public static class UpdateAccount
             Validator = validator;
         }
 
-        public IAccountService AccountService { get; }
-        public IAccountMapper Mapper { get; }
-        public IValidator<Request> Validator { get; }
+        private IAccountService AccountService { get; }
+        private IAccountMapper Mapper { get; }
+        private IValidator<Request> Validator { get; }
 
-        public Task<UpdateResult<Account>> Handle(Request request, CancellationToken cancellationToken)
+        public Task<CreateResult<Account>> Handle(Request request, CancellationToken cancellationToken)
         {
             return Task.FromResult(Handle(request));
         }
 
-        private UpdateResult<Account> Handle(Request request)
+        public CreateResult<Account> Handle(Request request)
         {
             var validationResult = Validator.Validate(request);
 
@@ -81,7 +75,7 @@ public static class UpdateAccount
 
             var account = Mapper.FromRequest(request);
 
-            var result = AccountService.Update(request.Id, account);
+            var result = AccountService.Create(account);
 
             return result;
         }

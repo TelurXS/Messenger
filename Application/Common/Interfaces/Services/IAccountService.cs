@@ -10,4 +10,6 @@ public interface IAccountService : IService<Account>
 
     bool IsEmailExist(string email);
     bool IsLoginExist(string login);
+    bool IsEmailUnique(string email);
+    bool IsLoginUnique(string login);
 }
