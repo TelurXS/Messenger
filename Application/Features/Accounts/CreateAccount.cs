@@ -62,6 +62,10 @@ public static class CreateAccount
         private IAccountMapper Mapper { get; }
         private IValidator<Request> Validator { get; }
         
+        public Task<CreateResult<Account>> Handle(Request request, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(Handle(request));
+        }
 
         public CreateResult<Account> Handle(Request request)
         {
@@ -75,11 +79,6 @@ public static class CreateAccount
             var result = AccountService.Create(account);
 
             return result;
-        }
-
-        public Task<CreateResult<Account>> Handle(Request request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
         }
     }
 }

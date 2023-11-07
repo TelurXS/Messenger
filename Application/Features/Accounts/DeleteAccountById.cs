@@ -1,3 +1,4 @@
+using Application.Common.Interfaces;
 using Application.Common.Interfaces.Services;
 using Application.Common.Models.Results.Unions;
 using MediatR;
@@ -11,7 +12,7 @@ public static class DeleteAccountById
         public int Id { get; set; }
     }
     
-    public class Handler : IRequestHandler<Request, DeleteResult>
+    public class Handler : ISyncRequestHandler<Request, DeleteResult>
     {
         
         public Handler(IAccountService accountService)
@@ -19,7 +20,7 @@ public static class DeleteAccountById
             AccountService = accountService;
         }
         
-        public IAccountService AccountService { get; }
+        private IAccountService AccountService { get; }
         
         public Task<DeleteResult> Handle(Request request, CancellationToken cancellationToken)
         {

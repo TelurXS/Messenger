@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces.Mappings;
+﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Mappings;
 using Application.Common.Interfaces.Services;
 using Application.Common.Models.Results;
 using Application.Common.Models.Results.Unions;
@@ -54,7 +55,7 @@ public static class UpdateAccount
         }
     }
 
-    public class Handler : IRequestHandler<Request, UpdateResult<Account>>
+    public class Handler : ISyncRequestHandler<Request, UpdateResult<Account>>
     {
         public Handler(IAccountService accountService, IAccountMapper mapper, IValidator<Request> validator)
         {
@@ -72,7 +73,7 @@ public static class UpdateAccount
             return Task.FromResult(Handle(request));
         }
 
-        private UpdateResult<Account> Handle(Request request)
+        public UpdateResult<Account> Handle(Request request)
         {
             var validationResult = Validator.Validate(request);
 

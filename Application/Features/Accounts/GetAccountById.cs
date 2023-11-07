@@ -1,18 +1,19 @@
-﻿using Application.Common.Interfaces.Services;
+﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Services;
 using Application.Common.Models.Results.Unions;
 using Application.Entities;
 using MediatR;
 
 namespace Application.Features.Accounts;
 
-public static partial class GetAccountById
+public static class GetAccountById
 {
     public class Request : IRequest<GetResult<Account>>
     {
         public int Id { get; set; }
     }
 
-    public class Handler : IRequestHandler<Request, GetResult<Account>>
+    public class Handler : ISyncRequestHandler<Request, GetResult<Account>>
     {
         public Handler(IAccountService accountService)
         {
