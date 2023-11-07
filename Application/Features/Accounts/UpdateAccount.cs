@@ -38,14 +38,14 @@ public static class UpdateAccount
             RuleFor(x => x.Login)
                 .NotEmpty()
                 .MaximumLength(32)
-                .Must(service.IsLoginUnique);
+                .Must((request, x) => service.IsLoginAvailableForId(request.Id, x));
 
 
             RuleFor(x => x.Email)
                 .NotEmpty()
                 .MaximumLength(64)
                 .EmailAddress()
-                .Must(service.IsEmailUnique);
+                .Must((request, x) => service.IsEmailAvailableForId(request.Id, x));
 
 
             RuleFor(x => x.Password)

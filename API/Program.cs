@@ -1,17 +1,22 @@
+using API.Middlewares;
 using Application.Common.Extensions;
-using Application.Common.Interfaces.Services;
-using Application.Features;
 using Application.Features.Accounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(x => x.FullName!.Split('.').Last().Replace("+", ""));
+});
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastrucutre(builder.Configuration);
+
+builder.Services.AddSingleton<ExceptionMiddleware>();
 
 var app = builder.Build();
 
@@ -23,7 +28,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapPost("/account/create", async (
+app.UseMiddleware<ExceptionMiddleware>();
+
+app.MapPost("/account", async (
     [FromBody] CreateAccount.Request request,
     [FromServices] IMediator mediator
     ) =>
@@ -36,7 +43,7 @@ app.MapPost("/account/create", async (
         failed => Results.BadRequest());
 });
 
-app.MapGet("account/{id}", async (
+app.MapGet("account/{id:int}", async (
     [FromRoute] int id,
     [FromServices] IMediator mediator) => 
 {
@@ -52,7 +59,7 @@ app.MapGet("account/{id}", async (
         notFound => Results.NotFound());
 });
 
-app.MapPut("account/{id}", async (
+app.MapPut("account/{id:int}", async (
     [FromRoute] int id,
     [FromBody] UpdateAccount.Request request,
     [FromServices] IMediator mediator) =>

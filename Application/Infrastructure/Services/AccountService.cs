@@ -3,7 +3,6 @@ using Application.Common.Interfaces.Services;
 using Application.Common.Models.Results;
 using Application.Common.Models.Results.Unions;
 using Application.Entities;
-using FluentValidation.Results;
 
 namespace Application.Infrastructure.Services;
 
@@ -132,5 +131,35 @@ public class AccountService : RepositoryService<Account, IAccountRepository>, IA
     public bool IsLoginUnique(string login)
     {
         return Repository.FindByLogin(login) is null;
+    }
+
+    public bool IsEmailAvailableForId(int id, string email)
+    {
+        var entity = Repository.FindById(id);
+
+        if (entity is null)
+            return false;
+
+        var found = Repository.FindByEmail(email);
+
+        if (found is null)
+            return true;
+
+        return found == entity;
+    }
+
+    public bool IsLoginAvailableForId(int id, string login)
+    {
+        var entity = Repository.FindById(id);
+
+        if (entity is null)
+            return false;
+
+        var found = Repository.FindByLogin(login);
+
+        if (found is null)
+            return true;
+
+        return found == entity;
     }
 }

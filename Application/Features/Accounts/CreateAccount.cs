@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces.Mappings;
+﻿using Application.Common.Interfaces;
+using Application.Common.Interfaces.Mappings;
 using Application.Common.Interfaces.Services;
 using Application.Common.Models.Results;
 using Application.Common.Models.Results.Unions;
@@ -48,7 +49,7 @@ public static class CreateAccount
         }
     }
 
-    public class Handler : IRequestHandler<Request, CreateResult<Account>>
+    public class Handler : ISyncRequestHandler<Request, CreateResult<Account>>
     {
         public Handler(IAccountService accountService, IAccountMapper mapper, IValidator<Request> validator)
         {
@@ -60,11 +61,7 @@ public static class CreateAccount
         private IAccountService AccountService { get; }
         private IAccountMapper Mapper { get; }
         private IValidator<Request> Validator { get; }
-
-        public Task<CreateResult<Account>> Handle(Request request, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(Handle(request));
-        }
+        
 
         public CreateResult<Account> Handle(Request request)
         {
@@ -78,6 +75,11 @@ public static class CreateAccount
             var result = AccountService.Create(account);
 
             return result;
+        }
+
+        public Task<CreateResult<Account>> Handle(Request request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
