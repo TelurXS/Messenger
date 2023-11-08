@@ -75,4 +75,17 @@ app.MapPut("account/{id:int}", async (
         failed => Results.BadRequest());
 });
 
+app.MapDelete("account/{id:int}", async (
+    [FromRoute] int id,
+    [FromBody] DeleteAccountById.Request request,
+    [FromServices] IMediator mediator) =>
+{
+    var result = await mediator.Send(request);
+
+    return result.Match(
+        success => Results.Ok(),
+        notFound => Results.NotFound(),
+        failed => Results.BadRequest());
+});
+
 app.Run();

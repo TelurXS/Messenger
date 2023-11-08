@@ -17,6 +17,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddSingleton<IAccountMapper, AccountMapper>();
+        services.AddSingleton<IGroupMapper, GroupMapper>();
+        services.AddSingleton<IMessageMapper, MessageMapper>();
         
         services.AddValidatorsFromAssembly(typeof(IAssemblyMark).Assembly);
         
