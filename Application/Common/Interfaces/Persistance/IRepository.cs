@@ -6,6 +6,8 @@ public interface IRepository<T>
 
     public T? Find(Func<T, bool> expression);
 
+    public List<T> FindAll();
+    
     public List<T> FindAll(Func<T, bool> expression);
 
     public T Insert(T value);

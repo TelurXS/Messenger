@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces.Persistance;
 using Application.Entities;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Infrastructure.Persistance.Repositories;
 
@@ -54,6 +55,11 @@ public sealed class GroupRepository : DataContextRepository<Group>, IGroupReposi
     public Group? Find(Func<Group, bool> expression)
     {
         return Entities.FirstOrDefault(expression);
+    }
+
+    public List<Group> FindAll()
+    {
+        return Entities.AsNoTracking().ToList();
     }
 
     public List<Group> FindAll(Func<Group, bool> expression)

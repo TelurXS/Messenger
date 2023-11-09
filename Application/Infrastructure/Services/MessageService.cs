@@ -83,6 +83,16 @@ public class MessageService : RepositoryService<Message, IMessageRepository>, IM
         return result;
     }
 
+    public GetAllResult<Message> FindAll()
+    {
+        var result = Repository.FindAll();
+        
+        if (result.Count == 0)
+            return new NotFound();
+
+        return result;
+    }
+
     public GetAllResult<Message> FindAll(Func<Message, bool> expression)
     {
         var result = Repository.FindAll(expression);

@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces.Persistance;
 using Application.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Infrastructure.Persistance.Repositories;
 
@@ -75,6 +76,11 @@ public sealed class AccountRepository : DataContextRepository<Account>, IAccount
     public Account? Find(Func<Account, bool> expression)
     {
         return Entities.FirstOrDefault(expression);
+    }
+
+    public List<Account> FindAll()
+    {
+        return Entities.AsNoTracking().ToList();
     }
 
     public List<Account> FindAll(Func<Account, bool> expression)

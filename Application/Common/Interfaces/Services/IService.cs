@@ -8,6 +8,8 @@ public interface IService<T>
 
     public GetResult<T> Find(Func<T, bool> expression);
 
+    public GetAllResult<T> FindAll();
+    
     public GetAllResult<T> FindAll(Func<T, bool> expression);
 
     public CreateResult<T> Create(T value);

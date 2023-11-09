@@ -83,6 +83,16 @@ public class AccountService : RepositoryService<Account, IAccountRepository>, IA
         return result;
     }
 
+    public GetAllResult<Account> FindAll()
+    {
+        var result = Repository.FindAll();
+
+        if (result.Count == 0)
+            return new NotFound();
+            
+        return result;
+    }
+
     public GetAllResult<Account> FindAll(Func<Account, bool> expression)
     {
         var result = Repository.FindAll(expression);

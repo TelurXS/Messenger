@@ -18,7 +18,7 @@ namespace Application.Tests
             Faker = new Faker();
 
             var builder = new DbContextOptionsBuilder()
-                .UseSqlServer("Server=DESKTOP-43HN7TU;Database=messagerdb;Trusted_Connection=True;TrustServerCertificate=True;");
+                .UseSqlServer("Server=KOMPUTER\\SQLEXPRESS;Database=messagerdb;Trusted_Connection=True;TrustServerCertificate=True;");
 
             DataContext = new DataContext(builder.Options);
 

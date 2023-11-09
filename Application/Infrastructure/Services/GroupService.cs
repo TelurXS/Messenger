@@ -83,6 +83,16 @@ public class GroupService : RepositoryService<Group, IGroupRepository>, IGroupSe
         return result;
     }
 
+    public GetAllResult<Group> FindAll()
+    {
+        var result = Repository.FindAll();
+
+        if (result.Count == 0)
+            return new NotFound();
+        
+        return result;
+    }
+
     public GetAllResult<Group> FindAll(Func<Group, bool> expression)
     {
         var result = Repository.FindAll(expression);

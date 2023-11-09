@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces.Persistance;
+﻿using System.Data.Entity;
+using Application.Common.Interfaces.Persistance;
 using Application.Entities;
 
 namespace Application.Infrastructure.Persistance.Repositories;
@@ -53,6 +54,11 @@ public sealed class MessageRepository : DataContextRepository<Message>, IMessage
     public Message? Find(Func<Message, bool> expression)
     {
         return Entities.FirstOrDefault(expression);
+    }
+
+    public List<Message> FindAll()
+    {
+        return Entities.AsNoTracking().ToList();
     }
 
     public List<Message> FindAll(Func<Message, bool> expression)

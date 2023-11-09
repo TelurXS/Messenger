@@ -10,7 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.CustomSchemaIds(x => x.FullName!.Split('.').Last().Replace("+", ""));
+    options.CustomSchemaIds(x => x.FullName!
+        .Split('.')
+        .Last()
+        .Replace("+", ""));
 });
 
 builder.Services.AddApplication();
