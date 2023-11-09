@@ -1,4 +1,6 @@
-﻿namespace Application.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Application.Entities;
 
 public sealed class Account
 {
@@ -12,5 +14,6 @@ public sealed class Account
 
     public string Password { get; set; } = string.Empty;
 
+    [JsonIgnore]
     public List<Group> Groups { get; set; } = new();
 }

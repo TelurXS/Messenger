@@ -13,7 +13,10 @@ public sealed class GroupRepository : DataContextRepository<Group>, IGroupReposi
 
     public Group? FindById(int id)
     {
-        return Entities.FirstOrDefault(x => x.Id == id);
+        return Entities
+            .Include(x => x.Accounts)
+            .Include(x => x.Messages)
+            .FirstOrDefault(x => x.Id == id);
     }
 
     public Group Insert(Group value)
@@ -33,6 +36,7 @@ public sealed class GroupRepository : DataContextRepository<Group>, IGroupReposi
         entity.Name = value.Name;
         entity.Description = value.Description;
 
+        SaveChanges();
         return entity;
     }
 
@@ -54,16 +58,61 @@ public sealed class GroupRepository : DataContextRepository<Group>, IGroupReposi
 
     public Group? Find(Func<Group, bool> expression)
     {
-        return Entities.FirstOrDefault(expression);
+        return Entities
+            .Include(x => x.Accounts)
+            .Include(x => x.Messages)
+            .FirstOrDefault(expression);
     }
 
     public List<Group> FindAll()
     {
-        return Entities.AsNoTracking().ToList();
+        return Entities
+            .AsNoTracking()
+            .Include(x => x.Accounts)
+            .Include(x => x.Messages)
+            .ToList();
     }
 
     public List<Group> FindAll(Func<Group, bool> expression)
     {
-        return Entities.Where(expression).ToList();
+        return Entities
+            .AsNoTracking()
+            .Include(x => x.Accounts)
+            .Include(x => x.Messages)
+            .Where(expression)
+            .ToList();
+    }
+
+    public bool AddAccountToGroup(Account account, int groupId)
+    {
+        var group = FindById(groupId);
+
+        if (group is null)
+            return false;
+
+        return AddAccountToGroup(account, group);
+    }
+
+    public bool AddAccountToGroup(Account account, Group group)
+    {
+        group.Accounts.Add(account);
+        account.Groups.Add(group);
+        return SaveChanges() > 0;
+    }
+
+    public bool RemoveAccountFromGroup(Account account, int groupId)
+    {
+        var group = FindById(groupId);
+
+        if (group is null)
+            return false;
+
+        return RemoveAccountFromGroup(account, group);
+    }
+
+    public bool RemoveAccountFromGroup(Account account, Group group)
+    {
+        group.Accounts.Remove(account);
+        return SaveChanges() > 0;
     }
 }

@@ -48,6 +48,8 @@ namespace Application.Tests
             Assert.Equal(account.Email, created.Email);
             Assert.Equal(account.Login, created.Login);
             Assert.Equal(account.Password, created.Password);
+            
+            //created.Email
 
             Output.WriteLine(created.Id.ToString());
         }

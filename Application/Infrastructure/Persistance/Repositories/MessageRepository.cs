@@ -30,8 +30,9 @@ public sealed class MessageRepository : DataContextRepository<Message>, IMessage
             return null;
 
         entity.Content = value.Content;
-        entity.SendedAt = value.SendedAt;
+        entity.SentAt = value.SentAt;
 
+        SaveChanges();
         return entity;
     }
 

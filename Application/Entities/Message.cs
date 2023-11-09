@@ -1,4 +1,6 @@
-﻿namespace Application.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Application.Entities;
 
 public sealed class Message
 {
@@ -6,9 +8,11 @@ public sealed class Message
 
     public string Content { get; set; } = string.Empty;
 
-    public DateTime SendedAt { get; set; } = default;
+    public DateTime SentAt { get; set; } = default;
 
+    [JsonIgnore]
     public Group Group { get; set; } = default;
 
+    [JsonIgnore]
     public Account Sender { get; set; } = default;
 }

@@ -34,6 +34,7 @@ public sealed class AccountRepository : DataContextRepository<Account>, IAccount
         entity.Email = value.Email;
         entity.Password = value.Password;
 
+        SaveChanges();
         return entity;
     }
 

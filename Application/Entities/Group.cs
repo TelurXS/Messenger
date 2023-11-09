@@ -1,4 +1,6 @@
-﻿namespace Application.Entities;
+﻿using System.Text.Json.Serialization;
+
+namespace Application.Entities;
 
 public sealed class Group
 {
@@ -8,7 +10,9 @@ public sealed class Group
 
     public string Description { get; set; } = string.Empty;
 
+    [JsonIgnore]
     public List<Message> Messages { get; set; } = new();
 
+    [JsonIgnore]
     public List<Account> Accounts { get; set; } = new();
 }

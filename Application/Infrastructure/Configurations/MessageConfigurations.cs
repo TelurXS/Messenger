@@ -17,7 +17,7 @@ public class MessageConfigurations : IEntityTypeConfiguration<Message>
             .HasMaxLength(128)
             .IsRequired();
 
-        builder.Property(x => x.SendedAt)
+        builder.Property(x => x.SentAt)
             .IsRequired();
 
         builder.HasOne(x => x.Sender);

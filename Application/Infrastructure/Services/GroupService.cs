@@ -102,4 +102,44 @@ public class GroupService : RepositoryService<Group, IGroupRepository>, IGroupSe
 
         return result;
     }
+
+    public UpdateResult<Group> AddAccountToGroup(Account account, int groupId)
+    {
+        var group = Repository.FindById(groupId);
+
+        if (group is null)
+            return new NotFound();
+        
+        return AddAccountToGroup(account, group);
+    }
+
+    public UpdateResult<Group> AddAccountToGroup(Account account, Group group)
+    {
+        var result = Repository.AddAccountToGroup(account, group);
+
+        if (result is false)
+            return new Failed();
+
+        return group;
+    }
+
+    public UpdateResult<Group> RemoveAccountFromGroup(Account account, int groupId)
+    {
+        var group = Repository.FindById(groupId);
+
+        if (group is null)
+            return new NotFound();
+        
+        return RemoveAccountFromGroup(account, group);
+    }
+
+    public UpdateResult<Group> RemoveAccountFromGroup(Account account, Group group)
+    {
+        var result = Repository.RemoveAccountFromGroup(account, group);
+
+        if (result is false)
+            return new Failed();
+
+        return group;
+    }
 }
