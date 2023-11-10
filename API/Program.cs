@@ -19,7 +19,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddApplication();
-builder.Services.AddInfrastrucutre(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddSingleton<ExceptionMiddleware>();
 
@@ -254,7 +254,23 @@ app.MapGet("message/{id:int}", async (
         notFound => Results.NotFound());
 });
 
-app.MapPost("/message", async (
+app.MapGet("message/in-group/{id:int}", async (
+    [FromRoute] int id,
+    [FromServices] IMediator mediator) => 
+{
+    var request = new GetAllMessagesInGroup.Request
+    {
+        GroupId = id,
+    };
+
+    var result = await mediator.Send(request);
+
+    return result.Match(
+        messages => Results.Ok(messages),
+        notFound => Results.NotFound());
+});
+
+app.MapPost("message", async (
     [FromBody] CreateMessageAtGroupFromAccount.Request request,
     [FromServices] IMediator mediator
 ) =>

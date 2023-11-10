@@ -1,0 +1,12 @@
+﻿<Application x:Class="Desktop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Desktop"
+             Startup="OnStartup">
+    <Application.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="Icon" UriSource="/Resources/Icon.png"/>
+            <BitmapImage x:Key="Logo" UriSource="/Resources/Logo.png"/>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

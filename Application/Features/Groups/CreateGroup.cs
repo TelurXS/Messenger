@@ -1,6 +1,7 @@
 using Application.Common.Interfaces;
 using Application.Common.Interfaces.Mappings;
 using Application.Common.Interfaces.Services;
+using Application.Common.Models.Messages;
 using Application.Common.Models.Results;
 using Application.Common.Models.Results.Unions;
 using Application.Entities;
@@ -25,10 +26,13 @@ public static class CreateGroup
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .MaximumLength(64);
+                .WithMessage(TranslatableMessages.Validation.PROPERTY_CANNOT_BE_EMPTY)
+                .MaximumLength(64)
+                .WithMessage(TranslatableMessages.Validation.PROPERTY_MUST_BE_CORRECT_LENGTH);
 
             RuleFor(x => x.Description)
-                .MaximumLength(256);
+                .MaximumLength(256)
+                .WithMessage(TranslatableMessages.Validation.PROPERTY_MUST_BE_CORRECT_LENGTH);
         }
     }
     

@@ -37,9 +37,6 @@ public static class GetAllMessagesInGroup
 
             var messages = group.Messages;
 
-            if (messages.Count == 0)
-                return new NotFound();
-
             return messages;
         }
     }

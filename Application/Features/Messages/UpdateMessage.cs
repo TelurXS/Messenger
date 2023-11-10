@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Interfaces.Mappings;
 using Application.Common.Interfaces.Services;
+using Application.Common.Models.Messages;
 using Application.Common.Models.Results;
 using Application.Common.Models.Results.Unions;
 using Application.Entities;
@@ -25,14 +26,18 @@ public static class UpdateMessage
         public Validator(IGroupService groupService)
         {
             RuleFor(x => x.Id)
-                .Must(x => groupService.FindById(x).Found);
+                .Must(x => groupService.FindById(x).Found)
+                .WithMessage(TranslatableMessages.Validation.Groups.ID_IS_NOT_EXIST);
             
             RuleFor(x => x.Content)
                 .NotEmpty()
-                .MaximumLength(128);
+                .WithMessage(TranslatableMessages.Validation.PROPERTY_CANNOT_BE_EMPTY)
+                .MaximumLength(128)
+                .WithMessage(TranslatableMessages.Validation.PROPERTY_MUST_BE_CORRECT_LENGTH);
 
             RuleFor(x => x.SentAt)
-                .Must(x => x <= DateTime.Now);
+                .Must(x => x <= DateTime.Now)
+                .WithMessage(TranslatableMessages.Validation.Messages.SENT_AT_CANNOT_BE_IN_FUTURE);
         }
     }
     

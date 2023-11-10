@@ -1,6 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Interfaces.Mappings;
 using Application.Common.Interfaces.Services;
+using Application.Common.Models.Messages;
 using Application.Common.Models.Results;
 using Application.Common.Models.Results.Unions;
 using Application.Entities;
@@ -27,17 +28,22 @@ public static class CreateMessageAtGroupFromAccount
         public Validator(IGroupService groupService, IAccountService accountService)
         {
             RuleFor(x => x.GroupId)
-                .Must((request, x) => groupService.FindById(request.GroupId).Found);
+                .Must((request, x) => groupService.FindById(request.GroupId).Found)
+                .WithMessage(TranslatableMessages.Validation.Groups.ID_IS_NOT_EXIST);
             
             RuleFor(x => x.AccountId)
-                .Must((request, x) => accountService.FindById(request.AccountId).Found);
+                .Must((request, x) => accountService.FindById(request.AccountId).Found)
+                .WithMessage(TranslatableMessages.Validation.Accounts.ID_IS_NOT_EXIST);
 
             RuleFor(x => x.Content)
                 .NotEmpty()
-                .MaximumLength(128);
+                .WithMessage(TranslatableMessages.Validation.PROPERTY_CANNOT_BE_EMPTY)
+                .MaximumLength(128)
+                .WithMessage(TranslatableMessages.Validation.PROPERTY_MUST_BE_CORRECT_LENGTH);
 
             RuleFor(x => x.SentAt)
-                .Must(x => x <= DateTime.Now);
+                .Must(x => x <= DateTime.Now)
+                .WithMessage(TranslatableMessages.Validation.Messages.SENT_AT_CANNOT_BE_IN_FUTURE);
         }
     }
     

@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Interfaces.Services;
+using Application.Common.Models.Messages;
 using Application.Common.Models.Results;
 using Application.Common.Models.Results.Unions;
 using Application.Entities;
@@ -21,10 +22,12 @@ public static class RemoveAccountFromGroup
         public Validator(IAccountService accountService, IGroupService groupService)
         {
             RuleFor(x => x.AccountId)
-                .Must(x => accountService.FindById(x).Found);
+                .Must(x => accountService.FindById(x).Found)
+                .WithMessage(TranslatableMessages.Validation.Accounts.ID_IS_NOT_EXIST);
             
             RuleFor(x => x.GroupId)
-                .Must(x => groupService.FindById(x).Found);
+                .Must(x => groupService.FindById(x).Found)
+                .WithMessage(TranslatableMessages.Validation.Groups.ID_IS_NOT_EXIST);
         }
     }
 

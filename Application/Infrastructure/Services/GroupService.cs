@@ -86,9 +86,6 @@ public class GroupService : RepositoryService<Group, IGroupRepository>, IGroupSe
     public GetAllResult<Group> FindAll()
     {
         var result = Repository.FindAll();
-
-        if (result.Count == 0)
-            return new NotFound();
         
         return result;
     }
@@ -96,21 +93,8 @@ public class GroupService : RepositoryService<Group, IGroupRepository>, IGroupSe
     public GetAllResult<Group> FindAll(Func<Group, bool> expression)
     {
         var result = Repository.FindAll(expression);
-
-        if (result.Count == 0)
-            return new NotFound();
-
-        return result;
-    }
-
-    public UpdateResult<Group> AddAccountToGroup(Account account, int groupId)
-    {
-        var group = Repository.FindById(groupId);
-
-        if (group is null)
-            return new NotFound();
         
-        return AddAccountToGroup(account, group);
+        return result;
     }
 
     public UpdateResult<Group> AddAccountToGroup(Account account, Group group)
@@ -121,16 +105,6 @@ public class GroupService : RepositoryService<Group, IGroupRepository>, IGroupSe
             return new Failed();
 
         return group;
-    }
-
-    public UpdateResult<Group> RemoveAccountFromGroup(Account account, int groupId)
-    {
-        var group = Repository.FindById(groupId);
-
-        if (group is null)
-            return new NotFound();
-        
-        return RemoveAccountFromGroup(account, group);
     }
 
     public UpdateResult<Group> RemoveAccountFromGroup(Account account, Group group)

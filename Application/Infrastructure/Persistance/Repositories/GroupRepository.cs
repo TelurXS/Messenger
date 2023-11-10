@@ -82,17 +82,7 @@ public sealed class GroupRepository : DataContextRepository<Group>, IGroupReposi
             .Where(expression)
             .ToList();
     }
-
-    public bool AddAccountToGroup(Account account, int groupId)
-    {
-        var group = FindById(groupId);
-
-        if (group is null)
-            return false;
-
-        return AddAccountToGroup(account, group);
-    }
-
+    
     public bool AddAccountToGroup(Account account, Group group)
     {
         group.Accounts.Add(account);
@@ -100,19 +90,10 @@ public sealed class GroupRepository : DataContextRepository<Group>, IGroupReposi
         return SaveChanges() > 0;
     }
 
-    public bool RemoveAccountFromGroup(Account account, int groupId)
-    {
-        var group = FindById(groupId);
-
-        if (group is null)
-            return false;
-
-        return RemoveAccountFromGroup(account, group);
-    }
-
     public bool RemoveAccountFromGroup(Account account, Group group)
     {
         group.Accounts.Remove(account);
+        account.Groups.Remove(group);
         return SaveChanges() > 0;
     }
 }
