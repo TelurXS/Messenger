@@ -10,27 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Desktop.Windows
+namespace Desktop.Pages
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// Interaction logic for ProfilePage.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class ProfilePage : Page
     {
-        public LoginWindow(MainWindow mainWindow)
+        public ProfilePage()
         {
             InitializeComponent();
-            MainWindow = mainWindow;
-        }
-
-        private MainWindow MainWindow { get; }
-
-        private void Button_Login_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-            MainWindow.Show();
         }
     }
 }

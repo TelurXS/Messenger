@@ -5,6 +5,10 @@
              Startup="OnStartup">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="/Resources/Styles/Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <BitmapImage x:Key="Icon" UriSource="/Resources/Icon.png"/>
             <BitmapImage x:Key="Logo" UriSource="/Resources/Logo.png"/>
         </ResourceDictionary>

@@ -15,22 +15,13 @@ using System.Windows.Shapes;
 namespace Desktop.Windows
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class MainWindow : Window
     {
-        public LoginWindow(MainWindow mainWindow)
+        public MainWindow()
         {
             InitializeComponent();
-            MainWindow = mainWindow;
-        }
-
-        private MainWindow MainWindow { get; }
-
-        private void Button_Login_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-            MainWindow.Show();
         }
     }
 }

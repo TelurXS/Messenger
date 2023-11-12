@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using Application.Common.Extensions;
+using Desktop.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -41,6 +42,7 @@ namespace Desktop
             Services.AddInfrastructure(Configuration);
 
             Services.AddTransient<LoginWindow>();
+            Services.AddTransient<MainWindow>();
 
             Provider = Services.BuildServiceProvider();
         }

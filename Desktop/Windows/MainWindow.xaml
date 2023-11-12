@@ -1,0 +1,116 @@
+﻿<Window x:Class="Desktop.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Desktop.Windows"
+        mc:Ignorable="d"
+        Icon="{StaticResource Icon}"
+        WindowStartupLocation="CenterScreen"
+        Title="Messenger" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200px"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="{StaticResource PrimaryBrush}">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50px"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Border CornerRadius="5" 
+                    Margin="5" 
+                    BorderThickness="2" 
+                    BorderBrush="{StaticResource DarkPrimaryBrush}">
+                <WrapPanel Grid.Row="0" 
+                           Background="{StaticResource DarkPrimaryBrush}">
+                    <Image Source="/Resources/User.png"
+                       Margin="5">
+                    </Image>
+
+                    <StackPanel Orientation="Vertical">
+                        <Label FontSize="14"
+                           Padding="0"
+                           Margin="2,0,0,0"
+                           Foreground="{StaticResource TextBrush}"
+                           VerticalAlignment="Top">
+                            Account
+                        </Label>
+                        <Label FontSize="12"
+                               Padding="0"
+                               Foreground="{StaticResource TextBrush}"
+                               Margin="2,0,0,0">
+                            Online
+                        </Label>
+                    </StackPanel>
+                </WrapPanel>
+            </Border>
+
+            <Border Grid.Row="1"
+                    Margin="5,0,5,5"
+                    BorderThickness="2"
+                    CornerRadius="5"
+                    BorderBrush="{StaticResource DarkerPrimaryBrush}">
+                <Grid Background="{StaticResource DarkerPrimaryBrush}">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40px"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0"
+                           Foreground="{StaticResource TextBrush}"
+                           HorizontalContentAlignment="Center" 
+                           VerticalContentAlignment="Center"
+                           FontSize="18">
+                        Groups
+                    </Label>
+
+                    <ListBox Grid.Row="1"
+                             Background="{StaticResource DarkPrimaryBrush}"
+                             BorderBrush="{StaticResource DarkPrimaryBrush}"
+                             HorizontalContentAlignment="Stretch" 
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                             ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                             VerticalContentAlignment="Center">
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Style.Resources>
+                                    <Style TargetType="Border">
+                                        <Setter Property="CornerRadius" Value="5"/>
+                                    </Style>
+                                </Style.Resources>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
+                        <ListBoxItem Margin="2"
+                                     Background="{StaticResource DarkPrimaryBrush}">
+
+                            <WrapPanel Orientation="Vertical">
+
+                                <Label Padding="0"
+                                       Foreground="{StaticResource TextBrush}"
+                                       FontSize="18">
+                                    Chat
+                                </Label>
+                                <Label Padding="0"
+                                       Foreground="{StaticResource TextBrush}"
+                                       FontSize="14">
+                                    10 users online
+                                </Label>
+                            </WrapPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Frame Grid.Column="1"
+               Source="/Pages/ProfilePage.xaml">
+        </Frame>
+    </Grid>
+</Window>

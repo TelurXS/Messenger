@@ -1,0 +1,112 @@
+﻿<Page x:Class="Desktop.Pages.ProfilePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Desktop.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="600"
+      Background="{StaticResource PrimaryBrush}"
+      Title="ProfilePage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="400px"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50px"></RowDefinition>
+                <RowDefinition Height="10px"></RowDefinition>
+                <RowDefinition Height="40px"></RowDefinition>
+                <RowDefinition Height="10px"></RowDefinition>
+                <RowDefinition Height="40px"></RowDefinition>
+                <RowDefinition Height="10px"></RowDefinition>
+                <RowDefinition Height="40px"></RowDefinition>
+                <RowDefinition Height="10px"></RowDefinition>
+                <RowDefinition Height="40px"></RowDefinition>                
+                <RowDefinition Height="10px"></RowDefinition>
+                <RowDefinition Height="40px"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Style="{StaticResource LabelXL}"
+                   Grid.Row="0" 
+                   Grid.Column="0" 
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center">
+                Profile
+            </Label>
+
+            <Label Style="{StaticResource LabelM}"
+                   Grid.Row="2" 
+                   Grid.Column="0">
+                Email
+            </Label>
+
+            <TextBox Style="{StaticResource RoundedTextBox}"
+                     Grid.Row="2" 
+                     Grid.Column="1">
+            </TextBox>
+
+            <Label Style="{StaticResource LabelM}"
+                   Grid.Row="4" 
+                   Grid.Column="0">
+                Name
+            </Label>
+
+            <TextBox Style="{StaticResource RoundedTextBox}"
+                     Grid.Row="4" 
+                     Grid.Column="1">
+            </TextBox>
+
+            <Label Style="{StaticResource LabelM}"
+                   Grid.Row="6" 
+                   Grid.Column="0">
+                Login
+            </Label>
+
+            <TextBox Style="{StaticResource RoundedTextBox}"
+                     Grid.Row="6" 
+                     Grid.Column="1">
+            </TextBox>
+
+            <Label Style="{StaticResource LabelM}"
+                   Grid.Row="8" 
+                   Grid.Column="0">
+                Password
+            </Label>
+
+            <TextBox Style="{StaticResource RoundedTextBox}"
+                     Grid.Row="8" 
+                     Grid.Column="1">
+            </TextBox>
+
+            <StackPanel Grid.Row="10" 
+                        Orientation="Horizontal" 
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="2">
+                
+                <Button Style="{StaticResource RoundedButton}"
+                        Width="100px"
+                        Margin="0"
+                        FontSize="18">
+                    Save
+                </Button>
+
+                <Button Style="{StaticResource RoundedButton}"
+                        Width="100px"
+                        Margin="0"
+                        FontSize="18">
+                    Cancel
+                </Button>
+
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

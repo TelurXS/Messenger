@@ -1,0 +1,70 @@
+﻿<Page x:Class="Desktop.Pages.GroupPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Desktop.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="600"
+      Title="GroupPage" Background="{StaticResource DarkPrimaryBrush}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <BitmapImage x:Key="Send" UriSource="/Resources/Send.png"></BitmapImage>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40px"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Label FontSize="20"
+                   Foreground="{StaticResource TextBrush}"
+                   VerticalAlignment="Center" 
+                   VerticalContentAlignment="Center">
+                Group
+            </Label>
+        </Grid>
+
+        <Border Grid.Row="1"
+                Margin="5,0,5,5"
+                CornerRadius="5"
+                BorderThickness="5"
+                BorderBrush="{StaticResource LighterPrimaryBrush}">
+            <Grid Background="{StaticResource LighterPrimaryBrush}"></Grid>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="40px"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0"
+                     FontSize="18"
+                     Margin="5,5,0,5"
+                     Padding="2,2,0,0"
+                     Foreground="{StaticResource TextBrush}"
+                     Background="{StaticResource LighterPrimaryBrush}">
+                <TextBox.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource LighterPrimaryBrush}"/>
+                    </Style>
+                </TextBox.Resources>
+            </TextBox>
+
+            <Button Grid.Column="1"
+                    Margin="5,7,9,7"
+                    BorderBrush="Transparent" Foreground="{StaticResource LighterPrimaryBrush}">
+                <Button.Background>
+                    <ImageBrush ImageSource="{StaticResource Send}" Stretch="Uniform"/>
+                </Button.Background>
+
+            </Button>
+        </Grid>
+    </Grid>
+</Page>
