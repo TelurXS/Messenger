@@ -64,6 +64,38 @@ app.MapGet("account/all", async (
         notFound => Results.NotFound());
 });
 
+app.MapGet("account/{id:int}/groups", async (
+    [FromRoute] int id,
+    [FromServices] IMediator mediator) =>
+{
+    var request = new GetAllGroupsFromAccount.Request
+    {
+        Id = id
+    };
+
+    var result = await mediator.Send(request);
+
+    return result.Match(
+        groups => Results.Ok(groups),
+        notFound => Results.NotFound());
+});
+
+app.MapGet("account/{id:int}/groups/test", async (
+    [FromRoute] int id,
+    [FromServices] IMediator mediator) =>
+{
+    var request = new GetAllGroupsFromAccountTest.Request
+    {
+        Id = id
+    };
+
+    var result = await mediator.Send(request);
+
+    return result.Match(
+        groups => Results.Ok(groups),
+        notFound => Results.NotFound());
+});
+
 app.MapPost("/account", async (
     [FromBody] CreateAccount.Request request,
     [FromServices] IMediator mediator

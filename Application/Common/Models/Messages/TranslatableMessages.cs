@@ -12,9 +12,14 @@ public static class TranslatableMessages
         {
             public const string LOGIN_IS_EXIST = "ACCOUNT_LOGIN_IS_EXIST";
             public const string EMAIL_IS_EXIST = "ACCOUNT_EMAIL_IS_EXIST";
+            
+            public const string LOGIN_IS_NOT_EXIST = "ACCOUNT_LOGIN_IS_NOT_EXIST";
+            public const string EMAIL_IS_NOT_EXIST = "ACCOUNT_EMAIL_IS_NOT_EXIST";
 
             public const string LOGIN_IS_NOT_AVAILABLE = "ACCOUNT_LOGIN_IS_NOT_AVAILABLE";
             public const string EMAIL_IS_NOT_AVAILABLE = "ACCOUNT_EMAIL_IS_NOT_AVAILABLE";
+            
+            public const string INCORRECT_PASSWORD = "ACCOUNT_INCORRECT_PASSWORD";
             
             public const string ID_IS_NOT_EXIST = "ACCOUNT_ID_IS_NOT_EXIST";
         }

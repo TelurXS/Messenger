@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using Application.Common.Extensions;
+using Application.Common.Interfaces.Persistance;
+using Application.Infrastructure.Persistance;
 using Desktop.Extensions;
+using Desktop.Infrastructure.Services;
+using Desktop.Interfaces;
 using Desktop.Pages;
 using Desktop.Windows;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using DesktopApplication = System.Windows.Application;
 
 namespace Desktop
@@ -25,8 +31,8 @@ namespace Desktop
                 .AddJsonFile("appsettings.json")
                 .Build();
         }
-        
-        private IServiceProvider Provider { get; set; }
+
+        private IServiceProvider Provider { get; set; } = null!;
         private IServiceCollection Services { get; }
         private IConfiguration Configuration { get; }
 
@@ -34,7 +40,7 @@ namespace Desktop
         {
             ConfigureServices();
 
-            var window = Provider.GetRequiredService<LoginWindow>();
+            var window = Provider.GetRequiredService<StartupWindow>();
             window.Show();
         }
 
@@ -44,27 +50,13 @@ namespace Desktop
             
             Services.AddApplication();
             Services.AddInfrastructure(Configuration);
-
-            Services.AddTransient<LoginWindow>();
-            Services.AddTransient<MainWindow>();
-
-            Services.AddTransient<GroupPage>();
-            Services.AddTransient<ProfilePage>();
             
-            Services.AddPages(x => new List<Page>()
-            {
-                x.GetRequiredService<GroupPage>(),
-                x.GetRequiredService<ProfilePage>()
-            });
+            Services.AddWindowsFromAssemblyContaining<AssemblyInfo>();
+            Services.AddPagesFromAssemblyContaining<AssemblyInfo>();
+
+            Services.AddSingleton<ICurrentUserService, CurrentUserService>();
 
             Provider = Services.BuildServiceProvider();
-
-            var bindings = Provider.GetRequiredService<PageBindings>();
-
-            foreach (var page in bindings)
-            {
-                MessageBox.Show(page.GetType().Name);
-            }
         }
     }
 }

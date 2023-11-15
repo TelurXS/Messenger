@@ -11,6 +11,7 @@
             </ResourceDictionary.MergedDictionaries>
             <BitmapImage x:Key="Icon" UriSource="/Resources/Icon.png"/>
             <BitmapImage x:Key="Logo" UriSource="/Resources/Logo.png"/>
+            <BitmapImage x:Key="Refresh" UriSource="/Resources/Refresh.png"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -15,12 +15,12 @@ public class GroupService : RepositoryService<Group, IGroupRepository>, IGroupSe
 
     public GetResult<Group> FindById(int id)
     {
-        var account = Repository.FindById(id);
+        var group = Repository.FindById(id);
 
-        if (account is null)
+        if (group is null)
             return new NotFound();
 
-        return account;
+        return group;
     }
 
     public CreateResult<Group> Create(Group value)

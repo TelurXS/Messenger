@@ -85,15 +85,29 @@ public sealed class GroupRepository : DataContextRepository<Group>, IGroupReposi
     
     public bool AddAccountToGroup(Account account, Group group)
     {
+        if (group.Accounts.Contains(account))
+            return false;
+        
+        if (account.Groups.Contains(group))
+            return false;
+        
         group.Accounts.Add(account);
         account.Groups.Add(group);
+        
         return SaveChanges() > 0;
     }
 
     public bool RemoveAccountFromGroup(Account account, Group group)
     {
+        if (group.Accounts.Contains(account) is false)
+            return false;
+        
+        if (account.Groups.Contains(group) is false)
+            return false;
+        
         group.Accounts.Remove(account);
         account.Groups.Remove(group);
+        
         return SaveChanges() > 0;
     }
 }

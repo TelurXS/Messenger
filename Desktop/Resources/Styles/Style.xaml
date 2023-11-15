@@ -14,12 +14,17 @@
         <Setter Property="Padding" Value="2,0,0,0"></Setter>
         <Setter Property="Margin" Value="5"></Setter>
         
-        
         <Style.Resources>
             <Style TargetType="{x:Type Border}">
                 <Setter Property="CornerRadius" Value="5"></Setter>
             </Style>
         </Style.Resources>
+        
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="{StaticResource LightPrimaryBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="RoundedButton" TargetType="{x:Type Button}" >
@@ -58,6 +63,14 @@
         <Setter Property="Foreground" Value="{StaticResource TextBrush}"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
+    
+    <Style x:Key="LabelXS" TargetType="{x:Type Label}" BasedOn="{StaticResource Label}">
+        <Setter Property="FontSize" Value="14"></Setter>
+    </Style>
+    
+    <Style x:Key="LabelS" TargetType="{x:Type Label}" BasedOn="{StaticResource Label}">
+        <Setter Property="FontSize" Value="16"></Setter>
+    </Style>
 
     <Style x:Key="LabelM" TargetType="{x:Type Label}" BasedOn="{StaticResource Label}">
         <Setter Property="FontSize" Value="18"></Setter>
@@ -68,6 +81,31 @@
     </Style>
 
     <Style x:Key="LabelXL" TargetType="{x:Type Label}" BasedOn="{StaticResource Label}">
+        <Setter Property="FontSize" Value="24"></Setter>
+    </Style>
+    
+    <Style x:Key="Text" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
+    
+    <Style x:Key="TextXS" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Text}">
+        <Setter Property="FontSize" Value="14"></Setter>
+    </Style>
+    
+    <Style x:Key="TextS" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Text}">
+        <Setter Property="FontSize" Value="16"></Setter>
+    </Style>
+
+    <Style x:Key="TextM" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Text}">
+        <Setter Property="FontSize" Value="18"></Setter>
+    </Style>
+
+    <Style x:Key="TextL" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Text}">
+        <Setter Property="FontSize" Value="20"></Setter>
+    </Style>
+
+    <Style x:Key="TextlXL" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource Text}">
         <Setter Property="FontSize" Value="24"></Setter>
     </Style>
 

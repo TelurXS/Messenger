@@ -8,6 +8,8 @@
     <Color x:Key="DarkerPrimary">#1e2124</Color>
 
     <Color x:Key="Text">White</Color>
+    <Color x:Key="Success">Green</Color>
+    <Color x:Key="Error">Crimson</Color>
 
     <SolidColorBrush x:Key="LighterPrimaryBrush" Color="{StaticResource LighterPrimary}"></SolidColorBrush>
     <SolidColorBrush x:Key="LightPrimaryBrush" Color="{StaticResource LightPrimary}"></SolidColorBrush>
@@ -16,5 +18,7 @@
     <SolidColorBrush x:Key="DarkerPrimaryBrush" Color="{StaticResource DarkerPrimary}"></SolidColorBrush>
     
     <SolidColorBrush x:Key="TextBrush" Color="{StaticResource Text}"></SolidColorBrush>
+    <SolidColorBrush x:Key="ErrorBrush" Color="{StaticResource Error}"></SolidColorBrush>
+    <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource Success}"></SolidColorBrush>
     
 </ResourceDictionary>

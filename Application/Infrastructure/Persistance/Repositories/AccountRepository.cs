@@ -12,7 +12,9 @@ public sealed class AccountRepository : DataContextRepository<Account>, IAccount
 
     public Account? FindById(int id)
     {
-        return Entities.FirstOrDefault(x => x.Id == id);
+        return Entities
+            .Include(x => x.Groups)
+            .FirstOrDefault(x => x.Id == id);
     }
 
     public Account Insert(Account value)
@@ -56,12 +58,16 @@ public sealed class AccountRepository : DataContextRepository<Account>, IAccount
 
     public Account? FindByEmail(string email)
     {
-        return Entities.FirstOrDefault(x => x.Email == email);
+        return Entities
+            .Include(x => x.Groups)
+            .FirstOrDefault(x => x.Email == email);
     }
 
     public Account? FindByLogin(string login)
     {
-        return Entities.FirstOrDefault(x => x.Login == login);
+        return Entities
+            .Include(x => x.Groups)
+            .FirstOrDefault(x => x.Login == login);
     }
 
     public bool IsEmailExist(string email)
@@ -76,16 +82,24 @@ public sealed class AccountRepository : DataContextRepository<Account>, IAccount
 
     public Account? Find(Func<Account, bool> expression)
     {
-        return Entities.FirstOrDefault(expression);
+        return Entities
+            .Include(x => x.Groups)
+            .FirstOrDefault(expression);
     }
 
     public List<Account> FindAll()
     {
-        return Entities.AsNoTracking().ToList();
+        return Entities
+            .AsNoTracking()
+            .Include(x => x.Groups)
+            .ToList();
     }
 
     public List<Account> FindAll(Func<Account, bool> expression)
     {
-        return Entities.Where(expression).ToList();
+        return Entities
+            .Include(x => x.Groups)
+            .Where(expression)
+            .ToList();
     }
 }

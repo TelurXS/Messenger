@@ -43,21 +43,15 @@
                 <ColumnDefinition Width="40px"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <TextBox Grid.Column="0"
+            <TextBox Style="{StaticResource RoundedTextBox}"
+                     Grid.Column="0"
                      FontSize="18"
                      Margin="5,5,0,5"
-                     Padding="2,2,0,0"
-                     Foreground="{StaticResource TextBrush}"
-                     Background="{StaticResource LighterPrimaryBrush}">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="5"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource LighterPrimaryBrush}"/>
-                    </Style>
-                </TextBox.Resources>
+                     Padding="2,2,0,0">
             </TextBox>
 
-            <Button Grid.Column="1"
+            <Button Style="{StaticResource RoundedButton}"
+                    Grid.Column="1"
                     Margin="5,7,9,7"
                     BorderBrush="Transparent" Foreground="{StaticResource LighterPrimaryBrush}">
                 <Button.Background>

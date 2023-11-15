@@ -1,0 +1,70 @@
+﻿<Window x:Class="Desktop.Windows.StartupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Desktop.Windows"
+        mc:Ignorable="d"
+        Icon="{StaticResource Icon}"
+        WindowStartupLocation="CenterScreen"
+        Title="Messenger" Height="450" Width="800"
+        ResizeMode="NoResize"
+        ContentRendered="StartupWindow_OnContentRendered">
+    <Window.Resources>
+        <ResourceDictionary>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource LightPrimaryBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500px"></ColumnDefinition>
+            <ColumnDefinition Width="300px"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100px"></RowDefinition>
+                <RowDefinition Height="200px"></RowDefinition>
+                <RowDefinition Height="50px"></RowDefinition>
+                <RowDefinition Height="100px"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="1" 
+                   Source="{StaticResource Logo}">
+            </Image>
+
+            <Label Style="{StaticResource LabelXL}"
+                   Grid.Row="2"
+                   HorizontalAlignment="Center">
+                Welcome to Messenger
+            </Label>
+        </Grid>
+
+        <Grid Grid.Column="1" Background="{StaticResource DarkPrimaryBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50px"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            
+            <WrapPanel Grid.Row="0" HorizontalAlignment="Center">
+                <Button x:Name="Button_LoginPage"
+                        Style="{StaticResource RoundedButton}"
+                        Click="Button_LoginPage_OnClick">
+                    Login
+                </Button>
+                
+                <Button x:Name="Button_RegistrationPage"
+                        Style="{StaticResource RoundedButton}"
+                        Click="Button_RegistrationPage_OnClick">
+                    Registration
+                </Button>
+            </WrapPanel>
+            
+            <Grid Grid.Row="1">
+                <Frame x:Name="Frame_Page"
+                       NavigationUIVisibility="Hidden">
+                </Frame>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

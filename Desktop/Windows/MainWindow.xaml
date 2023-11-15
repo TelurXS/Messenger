@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Icon="{StaticResource Icon}"
         WindowStartupLocation="CenterScreen"
-        Title="Messenger" Height="450" Width="800">
+        Title="Messenger" Height="450" Width="800"
+        ContentRendered="MainWindow_OnContentRendered">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200px"></ColumnDefinition>
@@ -21,22 +22,26 @@
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
 
-            <Border CornerRadius="5" 
-                    Margin="5" 
-                    BorderThickness="2" 
+            <Border Grid.Row="0"
+                    CornerRadius="5"
+                    Margin="5"
+                    BorderThickness="2"
                     BorderBrush="{StaticResource DarkPrimaryBrush}">
-                <WrapPanel Grid.Row="0" 
-                           Background="{StaticResource DarkPrimaryBrush}">
+
+                <WrapPanel
+                    Background="{StaticResource DarkPrimaryBrush}">
+
                     <Image Source="/Resources/User.png"
-                       Margin="5">
+                           Margin="5">
                     </Image>
 
                     <StackPanel Orientation="Vertical">
-                        <Label FontSize="14"
-                           Padding="0"
-                           Margin="2,0,0,0"
-                           Foreground="{StaticResource TextBrush}"
-                           VerticalAlignment="Top">
+                        <Label x:Name="Label_AccountName"
+                               FontSize="14"
+                               Padding="0"
+                               Margin="2,0,0,0"
+                               Foreground="{StaticResource TextBrush}"
+                               VerticalAlignment="Top">
                             Account
                         </Label>
                         <Label FontSize="12"
@@ -60,57 +65,96 @@
                         <RowDefinition Height="40px"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="120px"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Label Style="{StaticResource LabelM}"
+                               Grid.Column="0"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Center"
+                               Padding="30,0,0,0">
+                            Groups
+                        </Label>
+                        
+                        <WrapPanel Grid.Column="1">
+                            <Button x:Name="Button_RefreshGroups"
+                                    Style="{StaticResource RoundedButton}"
+                                    Grid.Column="1"
+                                    Margin="7"
+                                    Click="Button_RefreshGroups_OnClick">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="{StaticResource Refresh}" Stretch="Uniform"/>
+                                </Button.Background>
+                            </Button>
+                        
+                            <Button x:Name="Button_Add"
+                                    Style="{StaticResource RoundedButton}"
+                                    Grid.Column="1"
+                                    Margin="7"
+                                    Click="Button_Add_OnClick">
+                                +
+                            </Button>
+                        
+                            <Button x:Name="Button_Remove"
+                                    Style="{StaticResource RoundedButton}"
+                                    Grid.Column="1"
+                                    Margin="7"
+                                    Click="Button_Remove_OnClick">
+                                -
+                            </Button>
+                        </WrapPanel>
+                    </Grid>
 
-                    <Label Grid.Row="0"
-                           Foreground="{StaticResource TextBrush}"
-                           HorizontalContentAlignment="Center" 
-                           VerticalContentAlignment="Center"
-                           FontSize="18">
-                        Groups
-                    </Label>
-
-                    <ListBox Grid.Row="1"
+                    <ListBox x:Name="ListBox_Groups"
+                             Grid.Row="1"
                              Background="{StaticResource DarkPrimaryBrush}"
                              BorderBrush="{StaticResource DarkPrimaryBrush}"
-                             HorizontalContentAlignment="Stretch" 
-                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-                             ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                             HorizontalContentAlignment="Stretch"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
                              VerticalContentAlignment="Center">
 
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
+                                <Setter Property="Background" Value="{StaticResource PrimaryBrush}"></Setter>
                                 <Style.Resources>
                                     <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5"/>
+                                        <Setter Property="CornerRadius" Value="5" />
                                     </Style>
                                 </Style.Resources>
                             </Style>
                         </ListBox.ItemContainerStyle>
 
-                        <ListBoxItem Margin="2"
-                                     Background="{StaticResource DarkPrimaryBrush}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel Orientation="Vertical"
+                                           Margin="2"
+                                           d:DataContext="{d:Group}">
 
-                            <WrapPanel Orientation="Vertical">
-
-                                <Label Padding="0"
-                                       Foreground="{StaticResource TextBrush}"
-                                       FontSize="18">
-                                    Chat
-                                </Label>
-                                <Label Padding="0"
-                                       Foreground="{StaticResource TextBrush}"
-                                       FontSize="14">
-                                    10 users online
-                                </Label>
-                            </WrapPanel>
-                        </ListBoxItem>
+                                    <Label Style="{StaticResource LabelM}"
+                                           Padding="0"
+                                           Content="{Binding Name}">
+                                    </Label>
+                                    
+                                    <Label Padding="0"
+                                           Style="{StaticResource LabelXS}"
+                                           Content="{Binding Accounts.Count}">
+                                    </Label>
+                                        
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
             </Border>
         </Grid>
 
         <Frame Grid.Column="1"
-               Source="/Pages/ProfilePage.xaml">
+               Source="/Pages/GroupPage.xaml">
         </Frame>
     </Grid>
 </Window>
