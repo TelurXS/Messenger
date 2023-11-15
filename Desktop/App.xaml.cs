@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using Application.Common.Extensions;
+using Desktop.Extensions;
+using Desktop.Pages;
 using Desktop.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,7 +48,23 @@ namespace Desktop
             Services.AddTransient<LoginWindow>();
             Services.AddTransient<MainWindow>();
 
+            Services.AddTransient<GroupPage>();
+            Services.AddTransient<ProfilePage>();
+            
+            Services.AddPages(x => new List<Page>()
+            {
+                x.GetRequiredService<GroupPage>(),
+                x.GetRequiredService<ProfilePage>()
+            });
+
             Provider = Services.BuildServiceProvider();
+
+            var bindings = Provider.GetRequiredService<PageBindings>();
+
+            foreach (var page in bindings)
+            {
+                MessageBox.Show(page.GetType().Name);
+            }
         }
     }
 }
