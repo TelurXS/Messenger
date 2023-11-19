@@ -1,0 +1,53 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:entities="clr-namespace:Application.Entities;assembly=Application">
+
+    <DataTemplate x:Key="MessageSelf" DataType="{x:Type entities:Message}">
+        <Border Margin="0,0,0,5"
+                Padding="5,0,5,0"
+                HorizontalAlignment="Right"
+                CornerRadius="5,5,0,5"
+                BorderThickness="1"
+                BorderBrush="SlateGray"
+                Background="SlateGray">
+            <WrapPanel Orientation="Vertical">
+                <Label Style="{StaticResource LabelS}"
+                       Padding="0"
+                       Content="{Binding Sender.Name}">
+                </Label>
+                <TextBlock
+                    MaxWidth="250"
+                    Style="{StaticResource TextS}"
+                    Padding="3,0,3,0"
+                    TextWrapping="Wrap"
+                    Text="{Binding Content}">
+                </TextBlock>
+            </WrapPanel>
+        </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="MessageAnother" DataType="{x:Type entities:Message}">
+        <Border Margin="0,0,0,5"
+                Padding="5,0,5,0"
+                HorizontalAlignment="Left"
+                CornerRadius="5,5,5,0"
+                BorderThickness="1"
+                BorderBrush="Gray"
+                Background="Gray">
+            <WrapPanel Orientation="Vertical">
+                <Label Style="{StaticResource LabelS}"
+                       Padding="0"
+                       Content="{Binding Sender.Name}">
+                </Label>
+                <TextBlock
+                    MaxWidth="250"
+                    Style="{StaticResource TextS}"
+                    Padding="3,0,3,0"
+                    TextWrapping="Wrap"
+                    Text="{Binding Content}">
+                </TextBlock>
+            </WrapPanel>
+        </Border>
+    </DataTemplate>
+
+</ResourceDictionary>

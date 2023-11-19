@@ -52,6 +52,17 @@ public sealed class MessageRepository : DataContextRepository<Message>, IMessage
         return Delete(entity);
     }
 
+    public List<Message> FindLastFromGroup(int groupId, int count = 100)
+    {
+        return Entities
+            .AsNoTracking()
+            .Include(x => x.Group)
+            .Include(x => x.Sender)
+            .Where(x => x.Group.Id == groupId)
+            .Take(count)
+            .ToList();
+    }
+
     public Message? Find(Func<Message, bool> expression)
     {
         return Entities.FirstOrDefault(expression);

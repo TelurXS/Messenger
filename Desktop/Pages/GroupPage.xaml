@@ -4,11 +4,16 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Desktop.Pages"
+      xmlns:templates="clr-namespace:Desktop.Templates"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="600"
-      Title="GroupPage" Background="{StaticResource DarkPrimaryBrush}">
+      Title="GroupPage" 
+      Background="{StaticResource PrimaryBrush}"
+      Loaded="GroupPage_OnLoaded"
+      Unloaded="GroupPage_OnUnloaded">
     <Page.Resources>
         <ResourceDictionary>
+            <!--  -->
             <BitmapImage x:Key="Send" UriSource="/Resources/Send.png"></BitmapImage>
         </ResourceDictionary>
     </Page.Resources>
@@ -21,7 +26,8 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Label FontSize="20"
+            <Label x:Name="Label_GroupName"
+                   FontSize="20"
                    Foreground="{StaticResource TextBrush}"
                    VerticalAlignment="Center" 
                    VerticalContentAlignment="Center">
@@ -30,11 +36,24 @@
         </Grid>
 
         <Border Grid.Row="1"
-                Margin="5,0,5,5"
+                Margin="10,0,10,10"
                 CornerRadius="5"
                 BorderThickness="5"
-                BorderBrush="{StaticResource LighterPrimaryBrush}">
-            <Grid Background="{StaticResource LighterPrimaryBrush}"></Grid>
+                BorderBrush="{StaticResource LighterPrimaryBrush}"
+                Background="{StaticResource LighterPrimaryBrush}">
+            
+            <ItemsControl x:Name="Control_Messages" 
+                          ItemTemplateSelector="{Binding TemplateSelector}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"
+                                    VerticalAlignment="Bottom"
+                                    IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            
+            
         </Border>
 
         <Grid Grid.Row="2">
@@ -43,17 +62,21 @@
                 <ColumnDefinition Width="40px"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <TextBox Style="{StaticResource RoundedTextBox}"
+            <TextBox x:Name="TextBox_Message"
+                     Style="{StaticResource RoundedTextBox}"
                      Grid.Column="0"
                      FontSize="18"
                      Margin="5,5,0,5"
                      Padding="2,2,0,0">
             </TextBox>
 
-            <Button Style="{StaticResource RoundedButton}"
+            <Button x:Name="Button_SendMessage"
+                    Style="{StaticResource RoundedButton}"
                     Grid.Column="1"
                     Margin="5,7,9,7"
-                    BorderBrush="Transparent" Foreground="{StaticResource LighterPrimaryBrush}">
+                    BorderBrush="Transparent" 
+                    Foreground="{StaticResource LighterPrimaryBrush}"
+                    Click="Button_SendMessage_OnClick">
                 <Button.Background>
                     <ImageBrush ImageSource="{StaticResource Send}" Stretch="Uniform"/>
                 </Button.Background>

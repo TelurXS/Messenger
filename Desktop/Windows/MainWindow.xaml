@@ -8,7 +8,7 @@
         Icon="{StaticResource Icon}"
         WindowStartupLocation="CenterScreen"
         Title="Messenger" Height="450" Width="800"
-        ContentRendered="MainWindow_OnContentRendered">
+        Loaded="MainWindow_OnLoaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200px"></ColumnDefinition>
@@ -26,12 +26,13 @@
                     CornerRadius="5"
                     Margin="5"
                     BorderThickness="2"
-                    BorderBrush="{StaticResource DarkPrimaryBrush}">
+                    BorderBrush="{StaticResource DarkPrimaryBrush}"
+                    MouseDown="Profile_OnClick">
 
                 <WrapPanel
                     Background="{StaticResource DarkPrimaryBrush}">
 
-                    <Image Source="/Resources/User.png"
+                    <Image Source="{StaticResource User}"
                            Margin="5">
                     </Image>
 
@@ -65,46 +66,40 @@
                         <RowDefinition Height="40px"></RowDefinition>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    
+
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition Width="120px"></ColumnDefinition>
+                            <ColumnDefinition Width="70px"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        
+
                         <Label Style="{StaticResource LabelM}"
                                Grid.Column="0"
                                VerticalAlignment="Center"
-                               HorizontalAlignment="Center"
-                               Padding="30,0,0,0">
+                               HorizontalAlignment="Right">
                             Groups
                         </Label>
                         
-                        <WrapPanel Grid.Column="1">
+                        <WrapPanel Grid.Column="1" Margin="5" Orientation="Horizontal">
                             <Button x:Name="Button_RefreshGroups"
                                     Style="{StaticResource RoundedButton}"
-                                    Grid.Column="1"
-                                    Margin="7"
+                                    Width="20px"
+                                    Height="20px"
                                     Click="Button_RefreshGroups_OnClick">
                                 <Button.Background>
-                                    <ImageBrush ImageSource="{StaticResource Refresh}" Stretch="Uniform"/>
+                                    <!--  -->
+                                    <ImageBrush ImageSource="{StaticResource Refresh}" Stretch="Uniform" /> 
                                 </Button.Background>
                             </Button>
-                        
-                            <Button x:Name="Button_Add"
+                            <Button x:Name="Button_CreateGroup"
                                     Style="{StaticResource RoundedButton}"
-                                    Grid.Column="1"
-                                    Margin="7"
-                                    Click="Button_Add_OnClick">
-                                +
-                            </Button>
-                        
-                            <Button x:Name="Button_Remove"
-                                    Style="{StaticResource RoundedButton}"
-                                    Grid.Column="1"
-                                    Margin="7"
-                                    Click="Button_Remove_OnClick">
-                                -
+                                    Width="20px"
+                                    Height="20px"
+                                    Click="Button_CreateGroup_OnClick">
+                                <Button.Background>
+                                    <!-- -->
+                                    <ImageBrush ImageSource="{StaticResource Plus}" Stretch="Uniform" /> 
+                                </Button.Background>
                             </Button>
                         </WrapPanel>
                     </Grid>
@@ -116,7 +111,8 @@
                              HorizontalContentAlignment="Stretch"
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                              ScrollViewer.VerticalScrollBarVisibility="Auto"
-                             VerticalContentAlignment="Center">
+                             VerticalContentAlignment="Center"
+                             SelectionChanged="ListBox_Groups_OnSelectionChanged">
 
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
@@ -124,6 +120,7 @@
                                 <Style.Resources>
                                     <Style TargetType="Border">
                                         <Setter Property="CornerRadius" Value="5" />
+                                        <Setter Property="Margin" Value="1,1,1,2" />
                                     </Style>
                                 </Style.Resources>
                             </Style>
@@ -139,12 +136,25 @@
                                            Padding="0"
                                            Content="{Binding Name}">
                                     </Label>
+
+                                    <WrapPanel>
+                                        <Label Padding="0"
+                                               Style="{StaticResource LabelXS}"
+                                               Content="{Binding Accounts.Count}">
+                                        </Label>
+                                        <Label Padding="0"
+                                               Margin="5,0,0,0"
+                                               Style="{StaticResource LabelXS}"
+                                               Content="account(s)">
+                                        </Label>
+                                    </WrapPanel>
                                     
-                                    <Label Padding="0"
-                                           Style="{StaticResource LabelXS}"
-                                           Content="{Binding Accounts.Count}">
-                                    </Label>
-                                        
+                                    <WrapPanel.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Delete" Click="MenuItem_Delete_OnClick"></MenuItem>
+                                            <MenuItem Header="Save"></MenuItem>
+                                        </ContextMenu>
+                                    </WrapPanel.ContextMenu>
                                 </WrapPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -153,8 +163,9 @@
             </Border>
         </Grid>
 
-        <Frame Grid.Column="1"
-               Source="/Pages/GroupPage.xaml">
+        <Frame x:Name="Frame_Page"
+               Grid.Column="1"
+               NavigationUIVisibility="Hidden">
         </Frame>
     </Grid>
 </Window>

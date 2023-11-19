@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Features.Accounts;
 
-public static class GetAllGroupsFromAccount
+public class GetAllGroupsFromAccount
 {
     public class Request : IRequest<GetAllResult<Group>>
     {
@@ -16,13 +16,15 @@ public static class GetAllGroupsFromAccount
     
     public class Handler : ISyncRequestHandler<Request, GetAllResult<Group>>
     {
-        public Handler(IAccountService accountService)
+        public Handler(IAccountService accountService, IGroupService groupService)
         {
             AccountService = accountService;
+            GroupService = groupService;
         }
         
         private IAccountService AccountService { get; }
-        
+        private IGroupService GroupService { get; }
+
         public Task<GetAllResult<Group>> Handle(Request request, CancellationToken cancellationToken)
         {
             return Task.FromResult(Handle(request));
@@ -30,12 +32,17 @@ public static class GetAllGroupsFromAccount
 
         public GetAllResult<Group> Handle(Request request)
         {
-            var result = AccountService.FindById(request.Id);
+            var accountResult = AccountService.FindById(request.Id);
 
-            if (result.NotFound)
+            if (accountResult.NotFound)
                 return new NotFound();
 
-            return result.AsFound.Groups;
+            var account = accountResult.AsFound;
+
+            var result = GroupService.FindAll(
+                x => x.Accounts.Any(a => a.Id == account.Id));
+
+            return result;
         }
     }
 }

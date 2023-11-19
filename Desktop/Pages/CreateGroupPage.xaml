@@ -1,15 +1,12 @@
-﻿<Page x:Class="Desktop.Pages.ProfilePage"
+﻿<Page x:Class="Desktop.Pages.CreateGroupPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Desktop.Pages"
       mc:Ignorable="d"
-      d:DesignHeight="450" d:DesignWidth="600"
-      Background="{StaticResource PrimaryBrush}"
-      Title="ProfilePage"
-      Loaded="ProfilePage_OnLoaded">
-
+      Title="CreateGroupPage" Height="450" Width="600"
+      Background="{StaticResource PrimaryBrush}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -32,10 +29,6 @@
                 <RowDefinition Height="40px"></RowDefinition>
                 <RowDefinition Height="10px"></RowDefinition>
                 <RowDefinition Height="40px"></RowDefinition>
-                <RowDefinition Height="10px"></RowDefinition>
-                <RowDefinition Height="40px"></RowDefinition>
-                <RowDefinition Height="10px"></RowDefinition>
-                <RowDefinition Height="40px"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Label Style="{StaticResource LabelXL}"
@@ -43,16 +36,16 @@
                    Grid.Column="0"
                    Grid.ColumnSpan="2"
                    HorizontalAlignment="Center">
-                Profile
+                Create Group
             </Label>
 
             <Label Style="{StaticResource LabelM}"
                    Grid.Row="2"
                    Grid.Column="0">
-                Email
+                Name
             </Label>
 
-            <TextBox x:Name="TextBox_Email"
+            <TextBox x:Name="TextBox_Name"
                      Style="{StaticResource RoundedTextBox}"
                      Grid.Row="2"
                      Grid.Column="1">
@@ -61,40 +54,16 @@
             <Label Style="{StaticResource LabelM}"
                    Grid.Row="4"
                    Grid.Column="0">
-                Name
+                Description
             </Label>
 
-            <TextBox x:Name="TextBox_Name"
+            <TextBox x:Name="TextBox_Description"
                      Style="{StaticResource RoundedTextBox}"
                      Grid.Row="4"
                      Grid.Column="1">
             </TextBox>
-
-            <Label Style="{StaticResource LabelM}"
-                   Grid.Row="6"
-                   Grid.Column="0">
-                Login
-            </Label>
-
-            <TextBox x:Name="TextBox_Login"
-                     Style="{StaticResource RoundedTextBox}"
-                     Grid.Row="6"
-                     Grid.Column="1">
-            </TextBox>
-
-            <Label Style="{StaticResource LabelM}"
-                   Grid.Row="8"
-                   Grid.Column="0">
-                Password
-            </Label>
-
-            <TextBox x:Name="TextBox_Password"
-                     Style="{StaticResource RoundedTextBox}"
-                     Grid.Row="8"
-                     Grid.Column="1">
-            </TextBox>
-
-            <StackPanel Grid.Row="10"
+            
+            <StackPanel Grid.Row="6"
                         Orientation="Horizontal"
                         Grid.Column="0"
                         Grid.ColumnSpan="2">
@@ -103,7 +72,6 @@
                         Style="{StaticResource RoundedButton}"
                         Width="100px"
                         Margin="0"
-                        FontSize="18"
                         Click="Button_Save_OnClick">
                     Save
                 </Button>
@@ -112,16 +80,15 @@
                         Style="{StaticResource RoundedButton}"
                         Width="100px"
                         Margin="0"
-                        FontSize="18"
                         Click="Button_Cancel_OnClick">
                     Cancel
                 </Button>
 
             </StackPanel>
-            
+
             <TextBlock x:Name="Label_Result"
                        Style="{StaticResource TextS}"
-                       Grid.Row="12"
+                       Grid.Row="8"
                        Grid.Column="0"
                        Grid.ColumnSpan="2"
                        VerticalAlignment="Top"

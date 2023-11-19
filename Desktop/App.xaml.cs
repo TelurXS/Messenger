@@ -54,7 +54,10 @@ namespace Desktop
             Services.AddWindowsFromAssemblyContaining<AssemblyInfo>();
             Services.AddPagesFromAssemblyContaining<AssemblyInfo>();
 
+            Services.AddSingleton<IGroupPageFactory, GroupPageFactory>();
+            
             Services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            Services.AddSingleton<ICurrentGroupService, CurrentGroupService>();
 
             Provider = Services.BuildServiceProvider();
         }

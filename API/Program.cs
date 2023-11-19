@@ -84,7 +84,7 @@ app.MapGet("account/{id:int}/groups/test", async (
     [FromRoute] int id,
     [FromServices] IMediator mediator) =>
 {
-    var request = new GetAllGroupsFromAccountTest.Request
+    var request = new GetAllGroupsFromAccount.Request
     {
         Id = id
     };

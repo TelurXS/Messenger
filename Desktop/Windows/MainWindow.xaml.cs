@@ -1,24 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Application.Entities;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Application.Common.Interfaces.Persistance;
-using Application.Common.Interfaces.Services;
+using System.Windows.Threading;
 using Application.Features.Accounts;
 using Application.Features.Groups;
-using Application.Infrastructure.Persistance;
 using Desktop.Interfaces;
+using Desktop.Pages;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Desktop.Windows
 {
@@ -27,20 +18,39 @@ namespace Desktop.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(IMediator mediator, ICurrentUserService currentUserService)
+        public MainWindow(
+            IMediator mediator, 
+            ICurrentUserService currentUserService, 
+            ICurrentGroupService currentGroupService,
+            IGroupPageFactory groupPageFactory,
+            DefaultPage defaultPage,
+            ProfilePage profilePage,
+            CreateGroupPage createGroupPage)
         {
             InitializeComponent();
             Mediator = mediator;
             CurrentUserService = currentUserService;
+            CurrentGroupService = currentGroupService;
+            GroupPageFactory = groupPageFactory;
+            DefaultPage = defaultPage;
+            ProfilePage = profilePage;
+            CreateGroupPage = createGroupPage;
         }
 
         private IMediator Mediator { get; }
         private ICurrentUserService CurrentUserService { get; }
+        private ICurrentGroupService CurrentGroupService { get; }
+        private IGroupPageFactory GroupPageFactory { get; }
+        private DefaultPage DefaultPage { get; }
+        private ProfilePage ProfilePage { get; }
+        private CreateGroupPage CreateGroupPage { get; }
 
-        private void MainWindow_OnContentRendered(object? sender, EventArgs e)
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
+            Frame_Page.Navigate(DefaultPage);
+            
             if (CurrentUserService.IsLogined is false)
-                throw new ArgumentException("Not logined into account");
+                throw new InvalidOperationException("Not logined into account");
             
             var account = CurrentUserService.Account!;
 
@@ -60,27 +70,9 @@ namespace Desktop.Windows
            result.Switch(
                groups =>
                {
-                   //MessageBox.Show(groups.Count.ToString());
-                   ListBox_Groups.ItemsSource = groups.ToArray();
+                   ListBox_Groups.ItemsSource = groups.ToList();
                },
                notFound => { });
-
-            //StringBuilder builder = new StringBuilder();
-            //var account = AccountService.FindById(6).AsFound;
-            //
-            //foreach (var group in GroupService.FindAll(x => x.Accounts.Contains(account)).AsFound)
-            //{
-            //    builder.AppendLine(group.Name);
-            //    
-            //    foreach (var a in group.Accounts )
-            //    {
-            //        builder.AppendLine("\t" + a.Name);
-            //    }
-            //
-            //    builder.AppendLine();
-            //}
-            //
-            //MessageBox.Show(builder.ToString());
         }
 
         private async void Button_RefreshGroups_OnClick(object sender, RoutedEventArgs e)
@@ -88,38 +80,52 @@ namespace Desktop.Windows
             UpdateGroupList();
         }
 
-        private async void Button_Add_OnClick(object sender, RoutedEventArgs e)
+        private void Profile_OnClick(object sender, MouseButtonEventArgs e)
         {
-            var request = new AddAccountToGroup.Request
-            {
-                AccountId = CurrentUserService.Account!.Id,
-                GroupId = 2,
-            };
-            
-            var result = await Mediator.Send(request);
-            
-            result.Switch(
-                x => MessageBox.Show("Success"),
-                x => MessageBox.Show("NotFound"),
-                x => MessageBox.Show("Val Er"),
-                x => MessageBox.Show("Failure"));
+            Frame_Page.Navigate(ProfilePage);
         }
 
-        private async void Button_Remove_OnClick(object sender, RoutedEventArgs e)
+        private void ListBox_Groups_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var request = new RemoveAccountFromGroup.Request
-            {
-                AccountId = CurrentUserService.Account!.Id,
-                GroupId = 2,
-            };
+            var selected = ListBox_Groups.SelectedItem as Group;
             
+            if (selected is null)
+                return;
+            
+            CurrentGroupService.Set(selected);
+            Frame_Page.Navigate(GroupPageFactory.Create(selected));
+        }
+
+        private void Button_CreateGroup_OnClick(object sender, RoutedEventArgs e)
+        {
+            Frame_Page.Navigate(CreateGroupPage);
+        }
+
+        private async void MenuItem_Delete_OnClick(object sender, RoutedEventArgs e)
+        {
+            var group = ListBox_Groups.SelectedItem as Group;
+
+            if (group is null)
+            {
+                MessageBox.Show("Not selected");
+                return;
+            }
+
+            var request = new DeleteGroupById.Request
+            {
+                Id = group.Id
+            };
+
             var result = await Mediator.Send(request);
             
             result.Switch(
-                x => MessageBox.Show("Success"),
-                x => MessageBox.Show("NotFound"),
-                x => MessageBox.Show("Val Er"),
-                x => MessageBox.Show("Failure"));
+                success =>
+                {
+                    UpdateGroupList();
+                    Frame_Page.Navigate(DefaultPage);
+                },
+                notFound => MessageBox.Show("Not found"),
+                failed => MessageBox.Show("Failed"));
         }
     }
 }

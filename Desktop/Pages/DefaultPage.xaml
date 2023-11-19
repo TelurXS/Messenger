@@ -1,0 +1,55 @@
+﻿<Page x:Class="Desktop.Pages.DefaultPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:Desktop.Pages"
+      mc:Ignorable="d"
+      Title="DefaultPage" Height="450" Width="600"
+      Background="{StaticResource PrimaryBrush}"
+      Loaded="DefaultPage_OnLoaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition Height="33px"></RowDefinition>
+            <RowDefinition Height="33px"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <WrapPanel Grid.Row="1"
+                   Grid.Column="0"
+                   HorizontalAlignment="Center">
+            
+            <Label Style="{StaticResource LabelXL}"
+                   Padding="0"
+                   Margin="0,0,10,0"
+                   HorizontalAlignment="Center">
+                Hello,
+            </Label>
+            
+            <Label x:Name="Label_Username" 
+                   Style="{StaticResource LabelXL}"
+                   Padding="0"
+                   HorizontalAlignment="Center">
+                User
+            </Label>
+            
+        </WrapPanel>
+
+        <Label Style="{StaticResource LabelM}"
+               Grid.Row="2"
+               Grid.Column="0"
+               Padding="0"
+               HorizontalAlignment="Center">
+            This is Starting Page,
+        </Label>
+
+        <Label Style="{StaticResource LabelM}"
+               Grid.Row="3"
+               Grid.Column="0"
+               Padding="0"
+               HorizontalAlignment="Center">
+            To get started Join or Create a Group
+        </Label>
+    </Grid>
+</Page>

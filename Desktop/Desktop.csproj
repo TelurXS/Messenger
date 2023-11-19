@@ -52,6 +52,10 @@
       <Resource Include="Resources\Refresh.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Resource>
+      <None Remove="Resources\Plus.png" />
+      <Resource Include="Resources\Plus.png">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Resource>
     </ItemGroup>
 
 </Project>

@@ -87,9 +87,6 @@ public class MessageService : RepositoryService<Message, IMessageRepository>, IM
     {
         var result = Repository.FindAll();
         
-        if (result.Count == 0)
-            return new NotFound();
-
         return result;
     }
 
@@ -97,8 +94,12 @@ public class MessageService : RepositoryService<Message, IMessageRepository>, IM
     {
         var result = Repository.FindAll(expression);
 
-        if (result.Count == 0)
-            return new NotFound();
+        return result;
+    }
+    
+    public GetAllResult<Message> FindLastFromGroup(int groupId, int count = 100)
+    {
+        var result = Repository.FindLastFromGroup(groupId, count);
 
         return result;
     }
