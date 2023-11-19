@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Threading;
+using Application.Features.Groups;
 using Application.Features.Messages;
 using Desktop.Interfaces;
 using Desktop.Templates;
@@ -31,7 +32,7 @@ namespace Desktop.Pages
 
             Timer = new DispatcherTimer();
             Timer.Tick += OnTimerTick;
-            Timer.Interval = TimeSpan.FromSeconds(5);
+            Timer.Interval = TimeSpan.FromSeconds(1);
             
             DataContext = new
             {
@@ -109,6 +110,25 @@ namespace Desktop.Pages
         private void GroupPage_OnUnloaded(object sender, RoutedEventArgs e)
         {
             Timer.Stop();
+        }
+
+        private async void Button_AddAccount_OnClick(object sender, RoutedEventArgs e)
+        {
+            var login = TextBox_UserLoginToAdd.Text;
+
+            var request = new AddAccountToGroupByLogin.Request
+            {
+                AccountLogin = login,
+                GroupId = Group.Id
+            };
+
+            var result = await Mediator.Send(request);
+            
+            result.Switch(
+                success => { },
+                notFound => MessageBox.Show("Not found"),
+                validationFailed => MessageBox.Show("Validation Failed"),
+                failed => MessageBox.Show("Failed"));
         }
     }
 }

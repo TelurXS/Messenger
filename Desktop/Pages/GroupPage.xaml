@@ -26,13 +26,36 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <Label x:Name="Label_GroupName"
-                   FontSize="20"
-                   Foreground="{StaticResource TextBrush}"
-                   VerticalAlignment="Center" 
-                   VerticalContentAlignment="Center">
-                Group
-            </Label>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="200px"></ColumnDefinition>
+                    <ColumnDefinition Width="40px"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <Label x:Name="Label_GroupName"
+                       Grid.Column="0"
+                       FontSize="20"
+                       Foreground="{StaticResource TextBrush}"
+                       VerticalAlignment="Center" 
+                       VerticalContentAlignment="Center">
+                    Group
+                </Label>
+                
+                <TextBox x:Name="TextBox_UserLoginToAdd"
+                         Grid.Column="1" 
+                         Style="{StaticResource RoundedTextBox}"
+                         Margin="5,10,5,10">
+                </TextBox>
+                
+                <Button x:Name="Button_AddAccount"
+                        Grid.Column="2"
+                        Style="{StaticResource RoundedButton}"
+                        Height="30px"
+                        Click="Button_AddAccount_OnClick">
+                    <Image Source="{StaticResource Plus}"></Image>
+                </Button>
+            </Grid>
         </Grid>
 
         <Border Grid.Row="1"
@@ -73,14 +96,11 @@
             <Button x:Name="Button_SendMessage"
                     Style="{StaticResource RoundedButton}"
                     Grid.Column="1"
-                    Margin="5,7,9,7"
+                    Margin="3,5,7,5"
                     BorderBrush="Transparent" 
                     Foreground="{StaticResource LighterPrimaryBrush}"
                     Click="Button_SendMessage_OnClick">
-                <Button.Background>
-                    <ImageBrush ImageSource="{StaticResource Send}" Stretch="Uniform"/>
-                </Button.Background>
-
+                    <Image Source="{StaticResource Send}" Stretch="Uniform"/>
             </Button>
         </Grid>
     </Grid>

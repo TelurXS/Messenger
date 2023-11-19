@@ -35,6 +35,10 @@ namespace Desktop.Windows
             DefaultPage = defaultPage;
             ProfilePage = profilePage;
             CreateGroupPage = createGroupPage;
+
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(3);
+            Timer.Tick += OnTick;
         }
 
         private IMediator Mediator { get; }
@@ -44,6 +48,8 @@ namespace Desktop.Windows
         private DefaultPage DefaultPage { get; }
         private ProfilePage ProfilePage { get; }
         private CreateGroupPage CreateGroupPage { get; }
+        
+        private DispatcherTimer Timer { get; }
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -56,6 +62,12 @@ namespace Desktop.Windows
 
             Label_AccountName.Content = account.Name;
             UpdateGroupList();
+            Timer.Start();
+        }
+        
+        private void MainWindow_OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            Timer.Stop();
         }
 
         private async void UpdateGroupList()
@@ -74,8 +86,14 @@ namespace Desktop.Windows
                },
                notFound => { });
         }
+        
+        
+        private void OnTick(object? sender, EventArgs e)
+        {
+            UpdateGroupList();
+        }
 
-        private async void Button_RefreshGroups_OnClick(object sender, RoutedEventArgs e)
+        private void Button_RefreshGroups_OnClick(object sender, RoutedEventArgs e)
         {
             UpdateGroupList();
         }
